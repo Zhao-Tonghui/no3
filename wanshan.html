@@ -1,0 +1,214 @@
+ <!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+	<link href="js.css" rel="stylesheet" type="text/css"/>
+    <title>完善个人信息</title>
+<script language="JavaScript">   
+function YYYYMMDDstart(){   
+	MonHead = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];   
+	
+	//先给年下拉框赋内容   
+	var y  = new Date().getFullYear();  
+	for (var i = (y-30); i < (y+30); i++) //以今年为准，前30年，后30年   
+		   document.reg_testdate.YYYY.options.add(new Option(" "+ i +" 年", i));   
+	
+	//赋月份的下拉框   
+	for (var i = 1; i < 13; i++)   
+		   document.reg_testdate.MM.options.add(new Option(" " + i + " 月", i));   
+	
+	document.reg_testdate.YYYY.value = y;   
+	document.reg_testdate.MM.value = new Date().getMonth() + 1;   
+	var n = MonHead[new Date().getMonth()];   
+	if (new Date().getMonth() ==1 && IsPinYear(YYYYvalue)) n++;   
+		writeDay(n); //赋日期下拉框Author:meizz   
+	document.reg_testdate.DD.value = new Date().getDate();   
+}   
+if(document.attachEvent)   
+	window.attachEvent("onload", YYYYMMDDstart);   
+else   
+window.addEventListener('load', YYYYMMDDstart, false);   
+function YYYYDD(str) //年发生变化时日期发生变化(主要是判断闰平年)   
+{   
+	var MMvalue = document.reg_testdate.MM.options[document.reg_testdate.MM.selectedIndex].value;   
+	if (MMvalue == ""){ var e = document.reg_testdate.DD; optionsClear(e); return;}   
+	var n = MonHead[MMvalue - 1];   
+	if (MMvalue ==2 && IsPinYear(str)) n++;   
+	writeDay(n)   
+}   
+function MMDD(str)   //月发生变化时日期联动   
+{   
+	var YYYYvalue = document.reg_testdate.YYYY.options[document.reg_testdate.YYYY.selectedIndex].value;   
+	if (YYYYvalue == ""){ var e = document.reg_testdate.DD; optionsClear(e); return;}   
+	var n = MonHead[str - 1];   
+	if (str ==2 && IsPinYear(YYYYvalue)) n++;   
+	writeDay(n)   
+}   
+function writeDay(n)   //据条件写日期的下拉框   
+{   
+	var e = document.reg_testdate.DD; optionsClear(e);   
+	for (var i=1; i<(n+1); i++)   
+	e.options.add(new Option(" "+ i + " 日", i));   
+}   
+function IsPinYear(year)//判断是否闰平年   
+{
+	return(0 == year%4 && (year%100 !=0 || year%400 == 0));
+}   
+function optionsClear(e)   
+{   
+	e.options.length = 1;   
+}   
+</script>
+
+	  <script type="text/javascript">
+  
+  var address=function(pro,city,area,dpro,dcity,darea)
+{
+    var area=document.getElementById(area);//获取省、市、地区节点元素
+	var pro=document.getElementById(pro);
+    var city=document.getElementById(city);
+
+	function select(cmb,str)//初始化省市区标签
+	{
+	   for(var i=0;i<cmb.options.length;i++)
+		{
+		   if(cmb.options[i].value==str)
+			{
+			   cmb.selectedIndex=i;
+			   return;
+			}
+		}
+	}
+	function addOption(cmb,str,obj)
+	{
+	   var option=document.createElement("OPTION");//创建option对象
+	   cmb.options.add(option);
+	   option.innerText=str;
+	   option.value=str;
+	   option.obj=obj;
+	}
+	function changeCity()
+	{
+	   area.options.length=0;
+	   if(city.selectedIndex==-1)return;
+	   var item=city.options[city.selectedIndex].obj;
+	   for(var i=0;i<item.areaList.length;i++) //为三级改变option里面的value值
+		{
+		   addOption(area,item.areaList[i],null)
+		}
+		select(area,darea);
+	}
+	function changePro()//改变事件onChange的调用
+	{
+	   city.options.length=0;
+	   city.onchange=null;
+	   if(pro.selectedIndex==-1)return;
+	   var item=pro.options[pro.selectedIndex].obj;
+	   for(var i=0;i<item.cityList.length;i++) //为二级改变option里面的value值
+		{
+		   addOption(city,item.cityList[i].name,item.cityList[i]);
+		}
+		select(city,dcity);
+		changeCity();
+		city.onchange=changeCity;
+	}
+	for(var i=0;i<proList.length;i++)//为一级改变option里面的value值
+	{
+	   addOption(pro,proList[i].name,proList[i]);
+	}
+	select(pro,dpro);
+	changePro();
+	pro.onchange=changePro;
+}
+//设置proList,cityList,areaList元素值
+var proList=[
+{name:'--请选择--',cityList:[{name:'--请选择--',areaList:['--请选择--']}]},
+
+{name:'北京',cityList:[{name:'市辖区',areaList:['东城区','崇文区','宣武区','西城区','大兴区','石景山区','海淀区']},{name:'县',areaList:['密云县','延庆县']}]},
+
+{name:'上海',cityList:[{name:'市辖区',areaList:['黄浦区','卢湾区','虹口区','闸北区','静安区','长宁区','徐汇区']},{name:'县',areaList:['崇明县']}]},
+
+{name:'天津',cityList:[{name:'市辖区',areaList:['和平区','河东区','南开区','西青区','东丽区','大港区','红桥区']},{name:'县',areaList:['宁河县','静海县','蓟县']}]},
+
+{name:'四川',cityList:[{name:'成都市',areaList:['市辖区','贡井区','大安区','锦江区','金牛区','青羊区']},{name:'自贡市',areaList:['市辖区','红花岗区','正安县','绥阳县','荣县','沿滩区']},{name:'攀枝花市',areaList:['市辖区','东区','西区','仁和区']},{name:'泸州市',areaList:['市辖区','江阳区','纳溪区','龙马潭区','泸县']},{name:'绵阳市',areaList:['市辖区','游仙区','三台县','平武县','梓潼县','安县']},{name:'广元市',areaList:['市辖区','市中区','元坝区','朝天区']},{name:'南充市',areaList:['市辖区','顺庆区','营山县','西充县','嘉陵区']}]},
+
+{name:'贵州',cityList:[{name:'贵阳市',areaList:['市辖区','南明区','云岩区']},{name:'六盘水市',areaList:['钟山区','六枝特区']},{name:'遵义市',areaList:['市辖区','红花岗区','正安县','绥阳县']},{name:'安顺市',areaList:['市辖区','江阳区','纳溪区','龙马潭区','泸县']},{name:'毕节地区',areaList:['毕节市','大方县','金沙县','织金县','赫章县','安县']}]},
+
+{name:'云南',cityList:[{name:'昆明市',areaList:['市辖区','五华区','盘龙区','官渡区','西山区']},{name:'玉溪市',areaList:['市辖区','红塔区','江川县','通海区','华宁区']},{name:'曲靖市',areaList:['市辖区','麒麟区','马龙县','陆良县','师宗县']},{name:'丽江市',areaList:['市辖区','古城区','玉龙纳西族自治县','永胜县','西山区']},{name:'临沧市',areaList:['市辖区','临翔区','云区']}]},
+
+{name:'西藏',cityList:[{name:'拉萨市',areaList:['市辖区','城关区','林周县']},{name:'山南地区',areaList:['乃东县','红塔区','江川县','通海区','华宁区']},{name:'那曲地区',areaList:['那曲县','红塔区','江川县','通海区','华宁区']},{name:'昌都地区',areaList:['昌都县','江达县']}]},
+
+{name:'黑龙江',cityList:[{name:'哈尔滨市',areaList:['市辖区','道里区','松北区']},{name:'大庆市',areaList:['萨尔图区','龙凤区']},{name:'伊春市',areaList:['市辖区','红塔区','江川县','通海区','华宁区']},{name:'玉溪市',areaList:['市辖区','红塔区','江川县','通海区','华宁区']},{name:'玉溪市',areaList:['市辖区','红塔区','江川县','通海区','华宁区']},{name:'玉溪市',areaList:['市辖区','红塔区','江川县','通海区','华宁区']}]},
+]
+  </script>
+
+
+  </head>
+
+  <body>
+  <div id="header" align="center">
+  <img src="1.jpg" style="height:60px;width:100%"></img>
+	<a href="zhuce.html" >注册</a>
+	<a href="wanshan.html" >完善个人信息</a>
+  </div>
+  <div id="centers">
+	<div id="left" class="c_left"><br><br>
+<form name="reg_testdate" onSubmit="alert('用户名：'+username.value+'\n所在地址：'+pro.value+city.value+area.value+'\n出生日期为：'+YYYY.value+'年'+MM.value+'月'+DD.value+'日'+'\n性别：'+sex.value+'\n电子邮件：'+email.value);">
+  <table width="75%" border="0" align="center">
+		
+		<tr><td></td><td align="left">完善个人信息</td><td></td></tr>
+		<tr>
+		<td>用户名（6-15位）</td>
+		<td><input type="text" name="username" id="f1"></td>
+
+	</tr>
+		<tr>
+		  <td>所在地址</td><td colspan=2> 
+
+		  <select id="pro" name="pro" value="--请选择--">--请选择--</select>
+	  <select id="city" name="city" value="--请选择--">--请选择--</select>
+	    <select id="area" name="area" value="--请选择--">--请选择--</select>
+		<script type="text/javascript">
+address('pro','city','area');
+</script></td>
+	</tr>
+    <tr>
+	 <td>出生年月</td>
+	 <td colspan=2> 
+
+	<select name="YYYY" onChange="YYYYDD(this.value)">
+		<option value="">--年--</option>
+	</select>
+	<select name="MM" onChange="MMDD(this.value)">
+		<option value="">--月--</option>
+	</select>
+	<select name="DD">
+		<option value="">--日--</option>
+	</select>
+
+	 </td>
+	</tr>
+		<tr>
+		<td>性别</td>
+		<td><input type="radio" name="sex" id="f5" value="男"  checked>男<input type="radio" name="sex" value="女" onblur="return checksex();">女</td>
+
+	</tr>
+		<tr>
+		<td>电子邮件</td>
+		<td><input type="text" name="email" id="f6" ></td>
+
+	</tr>
+        <tr><td></td>
+        <td><center><input type="submit" value="提交">
+	          <input type="reset" value="重置"></center></td>
+	</tr>
+	</table>
+	</form>
+	<br><br><br><br><center>	<a href="lianxi.html" >联系我们</a></center>
+	</div>
+	<div id="right" class="c_right">
+	</div>
+   </div>
+  </body>
+</html>
+

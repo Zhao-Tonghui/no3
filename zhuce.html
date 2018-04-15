@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+	<link href="js.css" rel="stylesheet" type="text/css"/>
+    <title>用户登录/注册</title>
+	  <script language="javascript">
+  q1=1;q2=1;q3=1;q4=1;q5=1;q6=1;
+function checkname()
+{
+	var username=document.form1.username.value;
+	if(username.length<6||username.length>15)
+	{
+        document.getElementById("t1").innerHTML='错误,用户名长度必须在6~15位之间';
+        document.getElementById("t1").style.color="red";
+		form1.username.focus();
+		q1=0;
+	}	
+	else
+	{
+        document.getElementById("t1").innerHTML='用户名格式正确';
+		document.getElementById("t1").style.color="green";
+		q1=1;
+	}
+}
+function checkpw()
+{
+	var pw1=document.form1.pw1.value;
+	if(pw1.length<6||pw1.length>20)
+	{
+	    document.getElementById("t2").innerHTML='错误，密码长度必须在6~20位之间';
+        document.getElementById("t2").style.color="red";
+		form1.pw1.focus();
+		q2=0;
+	}	
+	else
+	{
+		document.getElementById("t2").innerHTML='密码格式正确';
+		document.getElementById("t2").style.color="green";
+		q2=1;
+	}
+}
+
+
+function checkemail()
+{
+	var email=document.form1.email.value;
+    if(email.charAt(0)=="."||email.charAt(0)=="@"||email.indexOf('@',0)==-1||email.indexOf('.',0)==-1||email.lastIndexOf("@")==email.length-1||email.lastIndexOf(".")==email.length-1)	{
+		document.getElementById("t6").innerHTML='错误，email格式错误';
+        document.getElementById("t6").style.color="red";
+		form1.email.focus();
+		q6=0;
+	}	
+	else
+	{
+		document.getElementById("t6").innerHTML='email格式正确';
+        document.getElementById("t6").style.color="green";
+		q6=1;
+	}
+}
+
+
+</script>
+<script type="text/javascript">
+<!--
+	  q1=1;q2=1;q3=1;q4=1;q5=1;q6=1;
+function checkname2()
+{
+	var username2=document.form2.username2.value;
+	if(username2.length<6||username2.length>15)
+	{
+        document.getElementById("t21").innerHTML='错误,用户名长度必须在6~15位之间';
+        document.getElementById("t21").style.color="red";
+		form2.username2.focus();
+		q1=0;
+	}	
+	else
+	{
+        document.getElementById("t21").innerHTML='用户名格式正确';
+		document.getElementById("t21").style.color="green";
+		q1=1;
+	}
+}
+function checkpw2()
+{
+	var pw21=document.form2.pw21.value;
+	if(pw21.length<6||pw21.length>20)
+	{
+	    document.getElementById("t22").innerHTML='错误，密码长度必须在6~20位之间';
+        document.getElementById("t22").style.color="red";
+		form2.pw21.focus();
+		q2=0;
+	}	
+	else
+	{
+		document.getElementById("t22").innerHTML='密码格式正确';
+		document.getElementById("t22").style.color="green";
+		q2=1;
+	}
+}
+
+//-->
+</script>
+  </head>
+
+  <body>
+
+  <div id="header" align="center">
+  <img src="1.jpg" style="height:60px;width:100%"></img>
+	<a href="zhuce.html" >注册</a>
+	<a href="wanshan.html" >完善个人信息</a>
+  </div>
+  <div id="centers">
+	<div id="left" class="c_left"><br><br>
+		<form name="form1">
+  <table width="75%" border="0" align="center">
+		
+		<tr><td></td><td align="center">注册</td><td></td></tr>
+		<tr>
+		<td>用户名（6-15位）</td>
+		<td><input type="text" name="username" id="f1" onblur="return checkname();"></td>
+		<td id="t1">请输入注册用户名</td>
+	</tr>
+	<tr>
+		<td>密码（6-20位）</td>
+		<td><input type="password" name="pw1" id="f2" onblur="return checkpw();"></td>
+		<td id="t2">请输入注册用户密码</td>
+	</tr>
+		<tr>
+		<td>电子邮件</td>
+		<td><input type="text" name="email" id="f6" onblur="return checkemail();"></td>
+		<td id="t6">请输入正确的Email格式</td>
+	</tr>
+    <tr height="20%">
+		<td>验证码验证</td><td align="center"><p id="v_container" style="width: 100px;height: 40px;position: relative">
+　　　　　　　　<canvas id="verifyCanvas" width="100" height="40" style="cursor: pointer;"></canvas>
+　　　　　　</p><br>
+　　　　　　<input type="text" id="code_input" size="8" value="" placeholder="请输入验证码"/>
+	
+		<button id="my_button">注册</button>
+		<input type="reset" /></td>
+	</tr>
+	</table></form>
+
+
+	<br><br><br><br><center>	<a href="lianxi.html" >联系我们</a></center>
+	</div>
+
+
+	<div id="right" class="c_right"><br><br>
+		<form name="form2">
+  <table width="300px" border="0" align="center">
+		
+		<tr><td></td><td align="left" id="dl">登录</td><td></td></tr>
+		<tr>
+		<td>用户名</td>
+		<td><input type="text" size=12 name="username2" id="f21" onblur="return checkname2();"></td></tr>
+		<tr><td></td><td id="t21">请输入注册用户名</td>
+	</tr>
+	<tr>
+		<td>密码</td>
+		<td><input type="password" size=12 name="pw21" id="f22" onblur="return checkpw2();"></td>
+		</tr>
+		<tr><td></td><td id="t22">请输入注册用户密码</td> </tr>
+        <tr align="center"><td>　<input type="submit" size=8 value="登录"></td>
+		<td><input type="reset" ></td>
+	</tr>
+	</table></form>
+	</div>
+   </div>
+  </body>
+
+
+  <script src="gVerify.js"></script>
+  <script>
+    var verifyCode = new GVerify("v_container");
+    document.getElementById("my_button").onclick = function(){
+		
+      var res = verifyCode.validate(document.getElementById("code_input").value);
+      if(res){	
+	var username=document.form1.username.value;
+	var pw1=document.form1.pw1.value;
+	var email=document.form1.email.value;
+	alert("验证正确");
+	alert("用户名："+username+"\n密码："+pw1+"\n电子邮件："+email);
+	return true;
+      }
+	  else{
+        alert("验证码错误");
+      }
+    }
+  </script>
+
+
+</html>
